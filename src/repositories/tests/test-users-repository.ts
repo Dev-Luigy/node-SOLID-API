@@ -1,13 +1,14 @@
 import { UserAlreadyExistsError } from 'src/services/errors/user-already-exists-error'
 import { UsersRepository } from '../users-repository'
 import { User, Prisma } from '@prisma/client'
+import { randomUUID } from 'node:crypto'
 
 export class InMemoryUsersRepository implements UsersRepository {
   private users: User[] = []
 
   async create(data: Prisma.UserCreateInput) {
     const user: User = {
-      id: 'user-1',
+      id: randomUUID(),
       name: data.name,
       email: data.email,
       password_hash: data.password_hash,
